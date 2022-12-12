@@ -17,4 +17,6 @@ SWITCHERS.ini - List of games, you can enable/disable game that needs to be enab
 currentbaseNums.ini - Tracks from giant current_urls list separated
 current_urls, current_timings - URLs and their lenghts
 
+base, temp_urls - For adding your own tracks in main playlist (using Excel and good hands)
+
 Waiting for something to happen? (1 - repeat, 0 or something - continue)
