@@ -5,7 +5,7 @@ Plays Touhou music with some options for good experience
 - Python
 - Selenium (pip install selenium)
 - Google Chrome browser
-- Last version of chromedriver from https://chromedriver.chromium.org/downloads
+- Version of chromedriver that compatible with your Google Chrome (https://chromedriver.chromium.org/downloads)
 
 ### Usage:
 Program can play music from start to end, from random second for N seconds. Can wait for user's input before a next track.
