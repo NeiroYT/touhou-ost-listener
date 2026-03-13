@@ -1,10 +1,11 @@
 from random import randint
 import time
-import selenium.webdriver as wd
+import undetected_chromedriver as wd
 
 sleep_mode = 1 # sleep fully or not
 working_mode = 1 # start randomly or not
 repet_mode = 1 # repeat used tracks or not
+chrome_path = r""
 
 def opener(link, timed=0, dur=0):
     if working_mode == 0:
@@ -37,13 +38,20 @@ def NumsInit():
 # [[num, num], "name"]
 
 def Global_Asker():
-    global sleep_mode, working_mode, repet_mode
+    global sleep_mode, working_mode, repet_mode, chrome_path
     try:
-        sleep_mode = int(input('0 - play full track, 1 - play N seconds, 2 - play N seconds with console wait: '))
+        try:
+            chrome_path = open_file('chrome_path')[0]
+        except:
+            chrome_path = input('Chrome executable path: ')
+            with open('chrome_path', 'w+') as file:
+                file.write(chrome_path)
+                file.write('\n')
+        sleep_mode = int(input('0 - play full track, 1 - play N seconds of track, 2 - play N seconds with console wait after each: '))
         working_mode = int(input('0 - play from the start, 1 - play from random second: '))
         repet_mode = int(input('0 - play with no repeats in tracklist, 1 - allow repeats: '))
     except ValueError:
-        print('Changed to 0, 0, 1.')
+        print('Error, so changed to 0, 0, 1.')
         sleep_mode = 0
         working_mode = 0
         repet_mode = 1
@@ -89,13 +97,18 @@ if __name__ == '__main__':
     suggested_time = 0
     if sleep_mode == 1 or sleep_mode == 2:
         try:
-            suggested_time = int(input('Seconds cooldown (minimum 1): '))
+            suggested_time = int(input('Amount of seconds for each track (minimum 1): '))
         except ValueError:
             print('Changed to 10')
             suggested_time = 10
         if suggested_time < 1:
             suggested_time = 10
-    browser = wd.Chrome('chromedriver.exe') # Start Compatible version of chromedriver.exe
+    try:
+        browser = wd.Chrome(driver_executable_path='chromedriver.exe', browser_executable_path=chrome_path) # Start Compatible version of chromedriver.exe
+    except Exception as e:
+        file = open('chrome_path', 'w+')
+        file.close()
+        raise e
     r = 0
     list1 = open_file("current_urls") # list1 - URLs, list2 - lengths
     list2 = open_file("current_timings") # Amount of durations should be the same with the amount of urls
@@ -129,7 +142,7 @@ if __name__ == '__main__':
         elif sleep_mode == 2:
             time.sleep(suggested_time)
             browser.get('about:blank')
-            r = input('\n\nWaiting for something to happen?\n\n')
+            r = input('\n\n1 - repeat again, something else - continue with new track\n\n')
         if r != '1':
             if repet_mode == 0:
                 list1.pop(randnum-1)
