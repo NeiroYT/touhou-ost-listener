@@ -1,6 +1,6 @@
 # touhou-ost-listener
 Plays Touhou music with some options for good experience \
-UPD. 13.03.2026 - switched from Selenium to undetected_chromedriver to bypass youtube antibot system.
+UPD. 13.03.2026 - switched from Selenium to undetected_chromedriver to bypass youtube antibot system. Added new links (th19, th20)
 
 ### Requirements
 - Python
